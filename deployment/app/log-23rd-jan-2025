@@ -1,0 +1,253 @@
+2026-01-23 18:21:23,978 - __main__ - INFO - Logging to file: C:\code\canadapost\voice3\smart-shipping-bidi-III\app\app.log
+2026-01-23 18:21:23,996 - uvicorn.error - INFO - Started server process [22804]
+2026-01-23 18:21:23,996 - uvicorn.error - INFO - Waiting for application startup.
+2026-01-23 18:21:23,997 - uvicorn.error - INFO - Application startup complete.
+2026-01-23 18:21:23,997 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-01-23 18:21:37,743 - __main__ - INFO - 📞 Telnyx webhook: call.initiated
+2026-01-23 18:21:37,743 - __main__ - INFO - 📞 Full payload: {
+  "data": {
+    "event_type": "call.initiated",
+    "id": "d5b8ea05-2921-4000-98fd-b735e25b8097",
+    "occurred_at": "2026-01-23T23:21:36.564479Z",
+    "payload": {
+      "call_control_id": "v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q",
+      "call_leg_id": "43515ea6-f8b2-11f0-bf1d-02420aef2520",
+      "call_session_id": "435155f0-f8b2-11f0-b1d5-02420aef2520",
+      "caller_id_name": "+15148637575",
+      "calling_party_type": "pstn",
+      "client_state": null,
+      "connection_codecs": "G722,PCMA,PCMU,VP8,H264",
+      "connection_id": "2877305985402144586",
+      "direction": "incoming",
+      "from": "+15148637575",
+      "from_sip_uri": "+15148637575@162.252.186.22",
+      "offered_codecs": "PCMU,PCMA,G729",
+      "start_time": "2026-01-23T23:21:36.564479Z",
+      "state": "parked",
+      "to": "+13434590213",
+      "to_sip_uri": "3434590213@192.76.120.10"
+    },
+    "record_type": "event"
+  },
+  "meta": {
+    "attempt": 1,
+    "delivered_to": "https://jr7zdrgw-8000.use.devtunnels.ms/telnyx/webhook"
+  }
+}
+2026-01-23 18:21:37,743 - __main__ - INFO - 📞 Call initiated: v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q
+2026-01-23 18:21:38,469 - httpx - INFO - HTTP Request: POST https://api.telnyx.com/v2/calls/v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q/actions/answer "HTTP/1.1 200 OK"
+2026-01-23 18:21:38,469 - __main__ - INFO - 📞 Answer response: 200
+2026-01-23 18:21:38,469 - uvicorn.access - INFO - 192.76.120.151:0 - "POST /telnyx/webhook HTTP/1.1" 200
+2026-01-23 18:21:39,297 - __main__ - INFO - 📞 Telnyx webhook: call.answered
+2026-01-23 18:21:39,297 - __main__ - INFO - 📞 Full payload: {
+  "data": {
+    "event_type": "call.answered",
+    "id": "60d8e28d-4ce5-4175-b4b7-bdfbddb8d70b",
+    "occurred_at": "2026-01-23T23:21:38.224495Z",
+    "payload": {
+      "call_control_id": "v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q",
+      "call_leg_id": "43515ea6-f8b2-11f0-bf1d-02420aef2520",
+      "call_session_id": "435155f0-f8b2-11f0-b1d5-02420aef2520",
+      "calling_party_type": "pstn",
+      "client_state": null,
+      "codec": "PCMU",
+      "connection_id": "2877305985402144586",
+      "from": "+15148637575",
+      "sampling_rate": 8000,
+      "start_time": "2026-01-23T23:21:36.564479Z",
+      "to": "+13434590213"
+    },
+    "record_type": "event"
+  },
+  "meta": {
+    "attempt": 1,
+    "delivered_to": "https://jr7zdrgw-8000.use.devtunnels.ms/telnyx/webhook"
+  }
+}
+2026-01-23 18:21:39,297 - __main__ - INFO - 📞 Call answered: v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q
+2026-01-23 18:21:39,297 - __main__ - INFO - 📞 Starting stream to: wss://jr7zdrgw-8000.use.devtunnels.ms/ws/phone
+2026-01-23 18:21:40,291 - telephony.telnyx_handler - INFO - ================================================================================
+2026-01-23 18:21:40,291 - telephony.telnyx_handler - INFO - 📞 NEW CALL - Waiting for Telnyx stream...
+2026-01-23 18:21:40,291 - telephony.telnyx_handler - INFO - ================================================================================
+2026-01-23 18:21:40,291 - uvicorn.error - INFO - 192.76.120.151:0 - "WebSocket /ws/phone" [accepted]
+2026-01-23 18:21:40,297 - uvicorn.error - INFO - connection open
+2026-01-23 18:21:40,394 - httpx - INFO - HTTP Request: POST https://api.telnyx.com/v2/calls/v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q/actions/streaming_start "HTTP/1.1 200 OK"
+2026-01-23 18:21:40,396 - __main__ - INFO - 📞 Stream start response: 200
+2026-01-23 18:21:40,397 - uvicorn.access - INFO - 192.76.120.151:0 - "POST /telnyx/webhook HTTP/1.1" 200
+2026-01-23 18:21:40,415 - telephony.telnyx_handler - INFO - 📞 CALL STARTED: v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q
+2026-01-23 18:21:40,418 - google_adk.google.adk.flows.llm_flows.base_llm_flow - INFO - Establishing live connection for agent: smartship_ivr_agent
+2026-01-23 18:21:40,419 - google_adk.google.adk.models.google_llm - INFO - Connecting to live for model: gemini-2.5-flash-native-audio-preview-12-2025
+2026-01-23 18:21:41,451 - __main__ - INFO - 📞 Telnyx webhook: streaming.started
+2026-01-23 18:21:41,451 - __main__ - INFO - 📞 Full payload: {
+  "data": {
+    "event_type": "streaming.started",
+    "id": "01c9ff31-a8a0-4d07-ba06-be150ec0c4a3",
+    "occurred_at": "2026-01-23T23:21:40.364471Z",
+    "payload": {
+      "call_control_id": "v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q",
+      "call_leg_id": "43515ea6-f8b2-11f0-bf1d-02420aef2520",
+      "call_session_id": "435155f0-f8b2-11f0-b1d5-02420aef2520",
+      "calling_party_type": "pstn",
+      "client_state": null,
+      "connection_id": "2877305985402144586",
+      "stream_id": "3641d212-9d06-4dab-a4c1-d201ed8896f5",
+      "stream_params": {
+        "stream_track": "both",
+        "stream_url": "wss://jr7zdrgw-8000.use.devtunnels.ms/ws/phone"
+      },
+      "stream_type": "websocket"
+    },
+    "record_type": "event"
+  },
+  "meta": {
+    "attempt": 1,
+    "delivered_to": "https://jr7zdrgw-8000.use.devtunnels.ms/telnyx/webhook"
+  }
+}
+2026-01-23 18:21:41,451 - __main__ - INFO - 📞 Streaming started successfully
+2026-01-23 18:21:41,451 - uvicorn.access - INFO - 192.76.120.151:0 - "POST /telnyx/webhook HTTP/1.1" 200
+2026-01-23 18:21:47,814 - shipping_agent.tools - WARNING - 🔄 Workflow state INVALID: gathering_info
+2026-01-23 18:21:55,670 - telephony.telnyx_handler - INFO - 📊 Usage #1: prompt=2504, thoughts=55, candidates=0, total=2801, implied_output=242
+2026-01-23 18:21:55,670 - telephony.telnyx_handler - INFO - 📊 Details: text_in=2504, audio_in=0
+2026-01-23 18:22:03,164 - shipping_agent.tools - INFO - ++++++++++++++ TOOL INVOKED: validate_canadian_postal_code ++++++++++++++
+2026-01-23 18:22:03,164 - shipping_agent.tools - INFO - Input: postal_code=H4V2T4
+2026-01-23 18:22:03,164 - shipping_agent.tools - INFO - Result: {'valid': True, 'formatted': 'H4V 2T4', 'error': None}
+2026-01-23 18:22:03,164 - shipping_agent.tools - INFO - ++++++++++++++ END: validate_canadian_postal_code ++++++++++++++
+2026-01-23 18:22:03,815 - shipping_agent.tools - WARNING - 🔄 Workflow state INVALID: gathering_info
+2026-01-23 18:22:12,455 - telephony.telnyx_handler - INFO - 📊 Usage #2: prompt=2956, thoughts=87, candidates=0, total=3285, implied_output=242
+2026-01-23 18:22:12,455 - telephony.telnyx_handler - INFO - 📊 Details: text_in=5434, audio_in=26
+2026-01-23 18:22:19,985 - shipping_agent.tools - INFO - ++++++++++++++ TOOL INVOKED: validate_canadian_postal_code ++++++++++++++
+2026-01-23 18:22:19,985 - shipping_agent.tools - INFO - Input: postal_code=M5V3N9
+2026-01-23 18:22:19,985 - shipping_agent.tools - INFO - Result: {'valid': True, 'formatted': 'M5V 3N9', 'error': None}
+2026-01-23 18:22:19,985 - shipping_agent.tools - INFO - ++++++++++++++ END: validate_canadian_postal_code ++++++++++++++
+2026-01-23 18:22:20,839 - shipping_agent.tools - WARNING - 🔄 Workflow state INVALID: gathering_info
+2026-01-23 18:22:25,808 - telephony.telnyx_handler - INFO - 📊 Usage #3: prompt=3584, thoughts=105, candidates=0, total=3841, implied_output=152
+2026-01-23 18:22:25,808 - telephony.telnyx_handler - INFO - 📊 Details: text_in=8963, audio_in=81
+2026-01-23 18:22:34,044 - shipping_agent.tools - INFO - ++++++++++++++ TOOL INVOKED: calculate_shipping_rates ++++++++++++++
+2026-01-23 18:22:34,044 - shipping_agent.tools - INFO - Input: from_postal=H4V2T4, to_postal=M5V3N9, dimensions={'length': 10, 'width': 10, 'height': 20}
+2026-01-23 18:22:34,044 - shipping_agent.tools - INFO - Result: {'success': True, 'from_postal': 'H4V2T4', 'to_postal': 'M5V3N9', 'dimensions': {'length': 10, 'width': 10, 'height': 20}, 'rates': [{'service': 'Regular Parcel', 'price': '$12.50', 'delivery': '5-7 business days'}, {'service': 'Expedited Parcel', 'price': '$18.75', 'delivery': '2-3 business days'}, {'service': 'Xpresspost', 'price': '$24.99', 'delivery': '1-2 business days'}]}
+2026-01-23 18:22:34,044 - shipping_agent.tools - INFO - ++++++++++++++ END: calculate_shipping_rates ++++++++++++++
+2026-01-23 18:22:55,409 - telephony.telnyx_handler - INFO - 📊 Usage #4: prompt=3958, thoughts=90, candidates=0, total=4568, implied_output=520
+2026-01-23 18:22:55,409 - telephony.telnyx_handler - INFO - 📊 Details: text_in=12846, audio_in=156
+2026-01-23 18:23:03,836 - telephony.telnyx_handler - INFO - 📊 Usage #5: prompt=4426, thoughts=24, candidates=0, total=4535, implied_output=85
+2026-01-23 18:23:03,836 - telephony.telnyx_handler - INFO - 📊 Details: text_in=17148, audio_in=280
+2026-01-23 18:23:08,225 - shipping_agent.tools - INFO - 🔄 Workflow state → complete
+2026-01-23 18:23:10,906 - telephony.telnyx_handler - INFO - 📊 Usage #6: prompt=4897, thoughts=37, candidates=0, total=4986, implied_output=52
+2026-01-23 18:23:10,906 - telephony.telnyx_handler - INFO - 📊 Details: text_in=21910, audio_in=415
+2026-01-23 18:23:16,570 - telephony.telnyx_handler - INFO - 📊 Usage #7: prompt=4828, thoughts=51, candidates=0, total=4853, implied_output=0
+2026-01-23 18:23:16,570 - telephony.telnyx_handler - INFO - 📊 Details: text_in=26593, audio_in=560
+2026-01-23 18:23:19,273 - uvicorn.error - INFO - connection closed
+2026-01-23 18:23:19,310 - shipping_agent.tools - INFO - 🔄 Workflow state reset to initial
+2026-01-23 18:23:19,310 - telephony.telnyx_handler - INFO - 
+================================================================================
+📞 CALL SUMMARY
+================================================================================
+Call ID:        v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1C...
+Duration:       98.9 seconds (1.65 minutes)
+Start:          2026-01-23 18:21:40
+End:            2026-01-23 18:23:19
+
+INTERACTIONS:
+  Audio chunks received:  4,925
+  Audio chunks sent:      1,353
+  Tool calls:             0
+
+TOKEN USAGE - ACTUAL (from Gemini):
+  Usage events received:  7
+  ┌─ INPUT TOKENS ────────────────────
+  │  Audio Input:     560 tokens
+  │  Text Input:      26,593 tokens  (system prompt + tools)
+  │  PROMPT TOTAL:    27,153 tokens
+  ├─ OUTPUT TOKENS ───────────────────
+  │  Audio Output:    1,267 tokens  (calculated: total - prompt - thoughts)
+  │  Thoughts:        449 tokens  (internal reasoning)
+  ├─ TOTALS ──────────────────────────
+  │  Cached:          0 tokens
+  │  API Total:       28,869 tokens
+  └───────────────────────────────────
+
+COST BREAKDOWN (Gemini 2.5 Flash Native Audio):
+  Audio Input:    $0.001680  (@$3.00/1M tokens)
+  Audio Output:   $0.015204  (@$12.00/1M tokens)
+  Text Input:     $0.013296  (@$0.50/1M tokens)
+  Text Output:    $0.000898  (@$2.00/1M tokens)
+  ─────────────────────────────────────────────
+  GEMINI TOTAL:   $0.031078 (~3.1079 cents)
+
+  + Telnyx (est): $0.028021 (~2.8021 cents)
+  ─────────────────────────────────────────────
+  CALL TOTAL:     $0.059099 (~5.9099 cents)
+================================================================================
+2026-01-23 18:23:19,591 - __main__ - INFO - 📞 Telnyx webhook: call.hangup
+2026-01-23 18:23:19,591 - __main__ - INFO - 📞 Full payload: {
+  "data": {
+    "event_type": "call.hangup",
+    "id": "8b6d9e27-bbeb-4503-9501-d2da2144d991",
+    "occurred_at": "2026-01-23T23:23:18.944478Z",
+    "payload": {
+      "call_control_id": "v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q",
+      "call_leg_id": "43515ea6-f8b2-11f0-bf1d-02420aef2520",
+      "call_quality_stats": {
+        "inbound": {
+          "jitter_max_variance": "2.67",
+          "jitter_packet_count": "0",
+          "mos": "4.50",
+          "packet_count": "5006",
+          "skip_packet_count": "33"
+        },
+        "outbound": {
+          "packet_count": "4929",
+          "skip_packet_count": "0"
+        }
+      },
+      "call_session_id": "435155f0-f8b2-11f0-b1d5-02420aef2520",
+      "calling_party_type": "pstn",
+      "client_state": null,
+      "connection_id": "2877305985402144586",
+      "end_time": "2026-01-23T23:23:18.944478Z",
+      "from": "+15148637575",
+      "hangup_cause": "normal_clearing",
+      "hangup_source": "caller",
+      "sip_hangup_cause": "200",
+      "start_time": "2026-01-23T23:21:36.564479Z",
+      "telnyx_error": null,
+      "to": "+13434590213"
+    },
+    "record_type": "event"
+  },
+  "meta": {
+    "attempt": 1,
+    "delivered_to": "https://jr7zdrgw-8000.use.devtunnels.ms/telnyx/webhook"
+  }
+}
+2026-01-23 18:23:19,591 - __main__ - INFO - 📞 Call ended
+2026-01-23 18:23:19,591 - uvicorn.access - INFO - 192.76.120.151:0 - "POST /telnyx/webhook HTTP/1.1" 200
+2026-01-23 18:23:19,704 - __main__ - INFO - 📞 Telnyx webhook: streaming.stopped
+2026-01-23 18:23:19,704 - __main__ - INFO - 📞 Full payload: {
+  "data": {
+    "event_type": "streaming.stopped",
+    "id": "3b0303f8-dd3a-47e0-9965-bb10dd12649d",
+    "occurred_at": "2026-01-23T23:23:19.141149Z",
+    "payload": {
+      "call_control_id": "v3:f2vSrjpvhjFzHAsgOBw-RryUAkrHS9Q2mYV9rvDX20yEd1CYIF2-3Q",
+      "call_leg_id": "43515ea6-f8b2-11f0-bf1d-02420aef2520",
+      "call_session_id": "435155f0-f8b2-11f0-b1d5-02420aef2520",
+      "calling_party_type": "pstn",
+      "client_state": null,
+      "connection_id": "2877305985402144586",
+      "stream_id": "3641d212-9d06-4dab-a4c1-d201ed8896f5",
+      "stream_params": {
+        "stream_track": "both",
+        "stream_url": "wss://jr7zdrgw-8000.use.devtunnels.ms/ws/phone"
+      },
+      "stream_type": "websocket"
+    },
+    "record_type": "event"
+  },
+  "meta": {
+    "attempt": 1,
+    "delivered_to": "https://jr7zdrgw-8000.use.devtunnels.ms/telnyx/webhook"
+  }
+}
+2026-01-23 18:23:19,705 - __main__ - INFO - 📞 Streaming stopped
+2026-01-23 18:23:19,705 - uvicorn.access - INFO - 192.76.120.151:0 - "POST /telnyx/webhook HTTP/1.1" 200

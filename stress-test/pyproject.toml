@@ -1,0 +1,24 @@
+[project]
+name = "smartship-stress-test"
+version = "1.0.0"
+description = "AI-to-AI stress testing for SmartShip Voice Assistant"
+requires-python = ">=3.10"
+dependencies = [
+    # Core ADK (same as main app)
+    "google-adk>=1.20.0",
+    "google-generativeai>=0.8.0",
+    # WebSocket client
+    "websockets>=12.0",
+    # Text-to-Speech
+    "edge-tts>=6.1.0",
+    # Audio conversion
+    "pydub>=0.25.0",
+    # Environment variables
+    "python-dotenv>=1.0.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23.0",
+]

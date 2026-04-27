@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microphone Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .device-list {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .device-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-left: 4px solid #4CAF50;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Microphone Diagnostic Test</h1>
+        <p>This tool will help diagnose microphone access issues.</p>
+        
+        <button id="testBtn" onclick="runTest()">Run Microphone Test</button>
+        <button id="listBtn" onclick="listDevices()">List Audio Devices</button>
+        <button id="testAllBtn" onclick="testAllDevices()">Test Each Device</button>
+        <button id="permBtn" onclick="checkPermissions()">Check Permissions</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let stream = null;
+
+        function addStatus(message, type = 'info') {
+            const resultsDiv = document.getElementById('results');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            resultsDiv.appendChild(statusDiv);
+        }
+
+        function addDeviceList(devices) {
+            const resultsDiv = document.getElementById('results');
+            const deviceDiv = document.createElement('div');
+            deviceDiv.className = 'device-list';
+            deviceDiv.innerHTML = '<h3>Audio Input Devices:</h3>';
+            
+            const audioDevices = devices.filter(d => d.kind === 'audioinput');
+            if (audioDevices.length === 0) {
+                deviceDiv.innerHTML += '<p style="color: red;">⚠️ No audio input devices found!</p>';
+            } else {
+                audioDevices.forEach((device, index) => {
+                    const deviceItem = document.createElement('div');
+                    deviceItem.className = 'device-item';
+                    deviceItem.innerHTML = `
+                        <strong>Device ${index + 1}:</strong><br>
+                        Label: ${device.label || '(No label - permission needed)'}<br>
+                        ID: ${device.deviceId}<br>
+                        Group: ${device.groupId}
+                    `;
+                    deviceDiv.appendChild(deviceItem);
+                });
+            }
+            
+            resultsDiv.appendChild(deviceDiv);
+        }
+
+        function addRawData(title, data) {
+            const resultsDiv = document.getElementById('results');
+            const preDiv = document.createElement('div');
+            preDiv.innerHTML = `<h3>${title}</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+            resultsDiv.appendChild(preDiv);
+        }
+
+        async function checkPermissions() {
+            document.getElementById('results').innerHTML = '';
+            addStatus('Checking permissions...', 'info');
+            
+            try {
+                // Check if Permissions API is available
+                if (!navigator.permissions) {
+                    addStatus('❌ Permissions API not available in this browser', 'error');
+                    return;
+                }
+
+                const result = await navigator.permissions.query({ name: 'microphone' });
+                
+                if (result.state === 'granted') {
+                    addStatus('✅ Microphone permission: GRANTED', 'success');
+                } else if (result.state === 'prompt') {
+                    addStatus('⚠️ Microphone permission: PROMPT (not yet requested)', 'info');
+                } else if (result.state === 'denied') {
+                    addStatus('❌ Microphone permission: DENIED', 'error');
+                    addStatus('To fix: Click the 🔒 or ⓘ icon in the address bar and allow microphone access', 'info');
+                }
+                
+                addRawData('Permission Details', result);
+            } catch (err) {
+                addStatus(`❌ Error checking permissions: ${err.message}`, 'error');
+                console.error('Permission check error:', err);
+            }
+        }
+
+        async function listDevices() {
+            document.getElementById('results').innerHTML = '';
+            addStatus('Listing audio devices...', 'info');
+            
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+                    addStatus('❌ MediaDevices API not available', 'error');
+                    return;
+                }
+
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                addStatus(`✅ Found ${devices.length} total devices`, 'success');
+                addDeviceList(devices);
+                addRawData('All Devices', devices);
+            } catch (err) {
+                addStatus(`❌ Error listing devices: ${err.message}`, 'error');
+                console.error('Device enumeration error:', err);
+            }
+        }
+
+        async function testAllDevices() {
+            document.getElementById('results').innerHTML = '';
+            addStatus('🔍 Testing each audio input device individually...', 'info');
+            
+            try {
+                // First get list of devices
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const audioInputs = devices.filter(d => d.kind === 'audioinput');
+                
+                if (audioInputs.length === 0) {
+                    addStatus('❌ No audio input devices found', 'error');
+                    return;
+                }
+                
+                addStatus(`Found ${audioInputs.length} audio input device(s)`, 'info');
+                
+                // Test each device
+                for (let i = 0; i < audioInputs.length; i++) {
+                    const device = audioInputs[i];
+                    const deviceName = device.label || `Device ${i + 1}`;
+                    
+                    addStatus(`\n📱 Testing: ${deviceName}`, 'info');
+                    
+                    try {
+                        const testStream = await navigator.mediaDevices.getUserMedia({
+                            audio: { deviceId: { exact: device.deviceId } }
+                        });
+                        
+                        addStatus(`✅ SUCCESS: ${deviceName} is working!`, 'success');
+                        
+                        // Stop the stream immediately
+                        testStream.getTracks().forEach(track => track.stop());
+                        
+                    } catch (err) {
+                        addStatus(`❌ FAILED: ${deviceName}`, 'error');
+                        addStatus(`   Error: ${err.name} - ${err.message}`, 'error');
+                        
+                        if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+                            addStatus(`   🔧 This device is in use by another application`, 'error');
+                        }
+                    }
+                    
+                    // Small delay between tests
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                
+                addStatus('\n✅ Device testing complete!', 'success');
+                
+            } catch (err) {
+                addStatus(`❌ Error during device testing: ${err.message}`, 'error');
+            }
+        }
+
+        async function runTest() {
+            document.getElementById('results').innerHTML = '';
+            addStatus('🔍 Running microphone test...', 'info');
+            
+            // Step 1: Check if getUserMedia is available
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                addStatus('❌ getUserMedia is not supported in this browser', 'error');
+                addStatus('Your browser does not support microphone access', 'error');
+                return;
+            }
+            addStatus('✅ getUserMedia API is available', 'success');
+            
+            // Step 2: Check if running on secure context
+            if (window.isSecureContext) {
+                addStatus('✅ Running in secure context (HTTPS or localhost)', 'success');
+            } else {
+                addStatus('⚠️ Not running in secure context - microphone may not work', 'error');
+            }
+            
+            // Step 3: Try to access microphone
+            try {
+                addStatus('Requesting microphone access...', 'info');
+                
+                stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+                
+                addStatus('✅ SUCCESS! Microphone access granted', 'success');
+                
+                // Get stream details
+                const audioTracks = stream.getAudioTracks();
+                if (audioTracks.length > 0) {
+                    const track = audioTracks[0];
+                    addStatus(`✅ Audio track active: ${track.label}`, 'success');
+                    addRawData('Track Settings', track.getSettings());
+                    addRawData('Track Capabilities', track.getCapabilities());
+                }
+                
+                // Create audio context to test
+                const audioContext = new AudioContext({ sampleRate: 16000 });
+                const source = audioContext.createMediaStreamSource(stream);
+                addStatus(`✅ AudioContext created (sample rate: ${audioContext.sampleRate} Hz)`, 'success');
+                
+                // Stop the stream after test
+                setTimeout(() => {
+                    stream.getTracks().forEach(track => track.stop());
+                    audioContext.close();
+                    addStatus('✅ Test complete - microphone stopped', 'info');
+                }, 2000);
+                
+            } catch (err) {
+                addStatus(`❌ FAILED to access microphone`, 'error');
+                addStatus(`Error: ${err.name} - ${err.message}`, 'error');
+                
+                // Provide specific guidance based on error type
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    addStatus('🔧 FIX: You denied microphone permission. Click the 🔒 icon in the address bar and allow microphone access.', 'info');
+                } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                    addStatus('🔧 FIX: No microphone found. Please connect a microphone or check your system audio settings.', 'info');
+                } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+                    addStatus('🔧 FIX: Microphone is already in use by another application. Close other apps using the microphone.', 'info');
+                } else if (err.name === 'OverconstrainedError') {
+                    addStatus('🔧 FIX: Microphone does not support requested settings.', 'info');
+                } else if (err.name === 'SecurityError') {
+                    addStatus('🔧 FIX: Microphone access blocked by browser security policy.', 'info');
+                }
+                
+                addRawData('Error Details', {
+                    name: err.name,
+                    message: err.message,
+                    stack: err.stack
+                });
+                
+                console.error('Microphone test error:', err);
+            }
+        }
+
+        // Run auto-test on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                addStatus('👋 Click "Run Microphone Test" to diagnose your microphone', 'info');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

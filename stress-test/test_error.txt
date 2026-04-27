@@ -1,0 +1,35 @@
+2026-01-25 16:25:51,947 - INFO - [bb207320] Connecting to wss://smart-bidi-3-1020676731684.us-central1.run.app/ws/phone
+2026-01-25 16:25:51,949 - INFO - [bb207320] Package: {'length': 32, 'width': 15, 'height': 19}, K9R 8X0 -> X9C 7P4
+2026-01-25 16:25:52,319 - INFO - [bb207320] Connected!
+2026-01-25 16:25:52,322 - INFO - [bb207320] Waiting for agent (turn 1)...
+2026-01-25 16:25:52,464 - INFO - [a0443eaa] Connecting to wss://smart-bidi-3-1020676731684.us-central1.run.app/ws/phone
+2026-01-25 16:25:52,466 - INFO - [a0443eaa] Package: {'length': 32, 'width': 31, 'height': 13}, K5T 1K6 -> C1A 1Z8
+2026-01-25 16:25:52,625 - INFO - [a0443eaa] Connected!
+2026-01-25 16:25:52,627 - INFO - [a0443eaa] Waiting for agent (turn 1)...
+2026-01-25 16:25:52,965 - INFO - [59c1f9ad] Connecting to wss://smart-bidi-3-1020676731684.us-central1.run.app/ws/phone
+2026-01-25 16:25:52,966 - INFO - [59c1f9ad] Package: {'length': 35, 'width': 34, 'height': 12}, V2M 2W1 -> T4C 4M7
+2026-01-25 16:25:53,116 - INFO - [59c1f9ad] Connected!
+2026-01-25 16:25:53,118 - INFO - [59c1f9ad] Waiting for agent (turn 1)...
+2026-01-25 16:25:58,990 - INFO - AFC is enabled with max remote calls: 10.
+2026-01-25 16:26:00,736 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-01-25 16:26:00,738 - INFO - [Agent] Hello, welcome to Smartship. I can help you calculate shipping rates for your package. To get starte...
+2026-01-25 16:26:01,580 - INFO - Sending out request, model: gemini-2.0-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2026-01-25 16:26:01,581 - INFO - AFC is enabled with max remote calls: 10.
+2026-01-25 16:26:02,045 - INFO - Response received from the model.
+2026-01-25 16:26:02,047 - INFO - [Customer] Hi, I'd like to get shipping rates.
+2026-01-25 16:26:02,048 - ERROR - TTS failed: No module named 'edge_tts'
+2026-01-25 16:26:02,106 - ERROR - [bb207320] Error: No module named 'edge_tts'
+2026-01-25 16:26:02,508 - INFO - AFC is enabled with max remote calls: 10.
+2026-01-25 16:26:03,789 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-01-25 16:26:03,795 - INFO - [Agent] Hello, welcome to SmartShip. I can help you calculate shipping rates for your package. To get starte...
+2026-01-25 16:26:04,605 - INFO - Sending out request, model: gemini-2.0-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2026-01-25 16:26:04,607 - INFO - AFC is enabled with max remote calls: 10.
+2026-01-25 16:26:05,136 - INFO - Response received from the model.
+2026-01-25 16:26:05,140 - INFO - [Customer] Hi, I'd like to get shipping rates.
+2026-01-25 16:26:05,141 - ERROR - TTS failed: No module named 'edge_tts'
+2026-01-25 16:26:05,187 - ERROR - [59c1f9ad] Error: No module named 'edge_tts'
+2026-01-25 16:26:05,228 - INFO - AFC is enabled with max remote calls: 10.
+2026-01-25 16:26:06,410 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 200 OK"
+2026-01-25 16:26:06,414 - INFO - [Agent] Hello, welcome to SmartShip. I can help you calculate shipping rates for your package. To get starte...
+2026-01-25 16:26:07,261 - INFO - Sending out request, model: gemini-2.0-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2026-01-25 16:26:07,262 - INFO - AFC is enabled with max remote calls: 10.

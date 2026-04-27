@@ -1,0 +1,17 @@
+
+================================================================================
+STRESS TEST: 3 Concurrent Telnyx Phone Calls
+================================================================================
+Endpoint: /ws/phone (Telnyx WebSocket protocol)
+Started at: 2026-01-25 16:25:51
+
+Starting calls...
+
+  [Call 1/3] K9R 8X0 -> X9C 7P4, 32x15x19cm (id: bb207320)
+  [Call 2/3] K5T 1K6 -> C1A 1Z8, 32x31x13cm (id: a0443eaa)
+  [Call 3/3] V2M 2W1 -> T4C 4M7, 35x34x12cm (id: 59c1f9ad)
+  [FAIL] Call bb207320: 10.16s, 0 sent/241 recv - ERROR: No module named 'edge_tts'
+  [FAIL] Call 59c1f9ad: 12.22s, 0 sent/246 recv - ERROR: No module named 'edge_tts'
+
+
+[!] Stress test interrupted by user

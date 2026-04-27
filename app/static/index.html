@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShip Voice</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Mode selection overlay - shows by default on page load -->
+    <div id="modeSelectionOverlay" class="mode-selection-overlay">
+        <div class="mode-selection-content">
+            <div class="logo">📦</div>
+            <h1>SmartShip Assistant</h1>
+            <p class="subtitle">Choose how you'd like to interact</p>
+            
+            <div class="mode-buttons">
+                <button id="startVoiceBtn" class="mode-btn voice-mode">
+                    <span class="mode-icon">🎤</span>
+                    <span class="mode-title">Voice Mode</span>
+                    <span class="mode-desc">Speak with camera for package scanning</span>
+                    <span class="mode-requirement">Requires microphone + camera</span>
+                </button>
+                
+                <button id="startIvrBtn" class="mode-btn ivr-mode">
+                    <span class="mode-icon">📞</span>
+                    <span class="mode-title">IVR Mode</span>
+                    <span class="mode-desc">Voice-only, no camera needed</span>
+                    <span class="mode-requirement">Requires microphone only</span>
+                </button>
+                
+                <button id="startTextBtn" class="mode-btn text-mode">
+                    <span class="mode-icon">💬</span>
+                    <span class="mode-title">Text Mode</span>
+                    <span class="mode-desc">Type your shipping details</span>
+                    <span class="mode-requirement">No permissions needed</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <!-- START VIEW -->
+            <div id="startView" class="view-container">
+                <div class="header">
+                    <div class="logo-small">📦</div>
+                    <h2 id="mainTitle">SmartShip Assistant</h2>
+                    <p id="mainSubtitle" class="subtitle">Ready to ship your package</p>
+                </div>
+                
+                <!-- Voice Section (shown in voice mode) -->
+                <div id="voiceSection" class="voice-section">
+                    <button id="voiceButton" class="voice-button">
+                        <span class="mic-icon">🎤</span>
+                    </button>
+                    <div id="recordingIndicator" class="recording-indicator hidden"></div>
+                    <p id="statusText" class="status-text">Ready to Start</p>
+                    <p id="statusSubtext" class="status-subtext">Tap the microphone and say "Hello"</p>
+                </div>
+
+                <!-- Text Chat Section (shown in text mode) -->
+                <div id="textChatSection" class="text-chat-section hidden">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message-bubble agent-bubble">
+                            <p>👋 Hi! I'm your SmartShip assistant. To calculate shipping rates, I need:</p>
+                            <ul>
+                                <li>📦 Package dimensions (length x width x height in cm)</li>
+                                <li>📍 Pickup postal code</li>
+                                <li>📍 Destination postal code</li>
+                            </ul>
+                            <p>You can provide all the information at once, or I'll ask for what's missing!</p>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" class="chat-input" placeholder="Type your shipping details (e.g., 30x20x15 cm from K1A0B1 to M5V3L9)..." />
+                        <button id="chatSendBtn" class="chat-send-btn">
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="featuresSection" class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">📸</div>
+                        <span>Automatic package scanning</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📏</div>
+                        <span>AI-powered dimension detection</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <span>Instant shipping quotes</span>
+                    </div>
+                </div>
+
+                <div id="controlsSection" class="controls">
+                    <button id="switchModeBtn" class="control-btn">
+                        <span id="switchModeIcon">💬</span>
+                        <span id="switchModeText">Switch to Text</span>
+                    </button>
+                    <button id="pauseBtn" class="control-btn voice-only">
+                        <span id="pauseIcon">⏸️</span>
+                        <span id="pauseText">Pause</span>
+                    </button>
+                    <button id="restartBtn" class="control-btn">
+                        <span>🔄</span>
+                        <span>Restart</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CAMERA VIEW -->
+            <div id="cameraView" class="view-container hidden">
+                <div class="header">
+                    <div class="status-badge capturing">
+                        <div class="spinner"></div>
+                        <span>Capturing Photo</span>
+                    </div>
+                    <h2>Analyzing Package</h2>
+                    <p class="subtitle" id="captureProgress">Please hold steady while we scan your package</p>
+                </div>
+
+                <div class="camera-preview">
+                    <video id="video" autoplay playsinline></video>
+                    <div id="overlay" class="scan-overlay">
+                        <div class="scan-lines"></div>
+                        <div class="frame-corners"></div>
+                        <div class="camera-overlay-content">
+                            <div class="camera-icon">📸</div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="canvas" style="display: none;"></canvas>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <div class="instructions">
+                    <h3>AI Detection Active</h3>
+                    <div class="instruction-list">
+                        <div class="instruction-item">
+                            <div class="check-icon">✓</div>
+                            <span>Measuring dimensions</span>
+                        </div>
+                        <div class="instruction-item">
+                            <div class="check-icon">✓</div>
+                            <span>Detecting edges</span>
+                        </div>
+                        <div class="instruction-item">
+                            <div class="check-icon">✓</div>
+                            <span>Calculating volume</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTS VIEW -->
+            <div id="resultsView" class="view-container hidden">
+                <div class="success-header">
+                    <div class="success-icon">✓</div>
+                    <h2>Shipping Quote Ready!</h2>
+                    <p>Your package has been analyzed successfully</p>
+                </div>
+
+                <div class="content">
+                    <div id="dimensionDisplay" class="section">
+                        <div class="section-title">Package Dimensions</div>
+                        <div id="dimensionDetails" class="dimensions-grid"></div>
+                    </div>
+
+                    <div id="postalCodeSection" class="section">
+                        <div class="section-title">Shipping Route</div>
+                        <div class="postal-codes">
+                            <div class="postal-card">
+                                <div class="postal-label">📍 From</div>
+                                <div id="fromPostalDisplay" class="postal-code"></div>
+                            </div>
+                            <div class="postal-card">
+                                <div class="postal-label">📍 To</div>
+                                <div id="toPostalDisplay" class="postal-code"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="shippingResults" class="section">
+                        <div class="section-title">Shipping Rates</div>
+                        <div id="ratesDisplay" class="shipping-options"></div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="restartBtnResults" class="btn btn-secondary">🔄 Restart</button>
+                        <button class="btn btn-primary">📦 Ship Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transcript display (controlled by SHOW_CONVERSATION env variable) -->
+    {% if show_conversation %}
+    <div id="transcriptDisplay" class="transcript-display"></div>
+    {% endif %}
+
+    <!-- Hidden inputs for data -->
+    <input type="hidden" id="fromPostalCode">
+    <input type="hidden" id="toPostalCode">
+    <select id="modelSelect" style="display: none;">
+        <option value="">Loading...</option>
+    </select>
+
+    <!-- SmartShip Live API with ADK - WebSocket Real-time Streaming -->
+    <script type="module" src="/static/js/text-mode.js"></script>
+    <script type="module" src="/static/js/live-controller.js"></script>
+</body>
+</html>
